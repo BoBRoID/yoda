@@ -36,14 +36,15 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '<module:(gii)>'            =>  '<module>/index',
+                '<module:(gii)>/<action>'   =>  '<module>/<action>',
+                '<action>'                  =>  'site/<action>',
             ],
         ],
-        */
     ],
     'params' => $params,
 ];

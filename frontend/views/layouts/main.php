@@ -35,8 +35,9 @@ NavBar::begin([
     ]
 ]);
 $menuItems = [
-    ['label' => 'Home', 'url' => ['/site/index']],
+    ['label' => 'Главная', 'url' => ['/site/index']],
     ['label' => 'About', 'url' => ['/site/about']],
+    ['label' => 'Галерея', 'url' => ['/site/gallery']],
     ['label' => 'Contact', 'url' => ['/site/contact']],
 ];
 if (Yii::$app->user->isGuest) {

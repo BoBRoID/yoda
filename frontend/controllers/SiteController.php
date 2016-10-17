@@ -1,8 +1,11 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Photo;
+use common\models\Section;
 use Yii;
 use yii\base\InvalidParamException;
+use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -72,7 +75,17 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->render('index', [
+            'sections'  =>  Section::find()->where(['position' => Section::POSITION_INDEX])->all()
+        ]);
+    }
+
+    public function actionGallery(){
+        return $this->render('gallery', [
+            'photosProvider'    =>  new ActiveDataProvider([
+                'query' =>  Photo::find()
+            ])
+        ]);
     }
 
     /**
