@@ -37,14 +37,17 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                ''          =>  'site/index',
+                '<controller:(photos|sections)>'                =>  '<controller>/index',
+                '<controller:(photos|sections)>/<action>'       =>  '<controller>/<action>',
+                '<controller:(photos|sections)>/<action>/<id>'  =>  '<controller>/<action>',
+                '<action>'                                      =>  'site/<action>'
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
