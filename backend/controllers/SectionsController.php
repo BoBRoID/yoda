@@ -4,6 +4,8 @@ namespace backend\controllers;
 
 use backend\models\SectionForm;
 use common\models\Section;
+use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -11,7 +13,11 @@ class SectionsController extends Controller
 {
 
     public function actionIndex(){
-        return $this->render('index');
+        return $this->render('index', [
+            'sectionsProvider'  =>  new ActiveDataProvider([
+                'query' =>  Section::find()
+            ])
+        ]);
     }
 
     public function actionAdd(){
@@ -20,6 +26,7 @@ class SectionsController extends Controller
         if(\Yii::$app->request->post('SectionForm') && $model->load(\Yii::$app->request->post())){
             if($model->save()){
                 \Yii::$app->session->setFlash('success', 'Секция успешно добавлена!');
+                return $this->redirect(Url::to(['sections/edit/'.$model->id]));
             }else{
                 \Yii::$app->session->setFlash('error', 'Произошла ошибка при добавлении секции!');
             }

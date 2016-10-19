@@ -3,9 +3,8 @@
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
-
 /** @var \common\models\Section[] $sections */
-$firstSection = array_pop($sections);
+$firstSection = array_shift($sections);
 
 ?>
 <header class="image-bg-fluid-height">
@@ -40,13 +39,13 @@ if($sections){
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <?php if($title = $firstSection->title){ ?>
+                <?php if($title = $section->title){ ?>
                     <h1 class="section-heading"><?=$title?></h1>
                 <?php }
-                if($lead = $firstSection->lead){ ?>
+                if($lead = $section->lead){ ?>
                     <p class="lead section-lead"><?=$lead?></p>
                 <?php }
-                if($text = $firstSection->text){ ?>
+                if($text = $section->text){ ?>
                     <p class="section-paragraph"><?=$text?></p>
                 <?php } ?>
             </div>

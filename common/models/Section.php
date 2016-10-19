@@ -52,4 +52,11 @@ class Section extends \yii\db\ActiveRecord
             'order' => 'Order',
         ];
     }
+
+    public function getPossiblePositions()
+    {
+        return [
+            self::POSITION_INDEX => 'Главная страница'
+        ];
+    }
 }
