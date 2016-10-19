@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "photos".
@@ -49,6 +50,16 @@ class Photo extends \yii\db\ActiveRecord
             'tags' => 'Tags',
             'order' => 'Order',
         ];
+    }
+
+    public function getFullPath(){
+        $fullPath = $this->path;
+
+        if(!preg_match('/^http(s|):\/\//', $fullPath)){
+            $fullPath = \Yii::$app->params['frontend'].$fullPath;
+        }
+
+        return $fullPath;
     }
 
     public function beforeSave($insert)

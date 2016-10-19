@@ -1,4 +1,5 @@
 <?php
+use kartik\date\DatePicker;
 use yii\bootstrap\Html;
 
 /** @var \backend\models\PhotoForm $model */
@@ -10,10 +11,17 @@ $form = \yii\bootstrap\ActiveForm::begin();
 if(!$model->path){
     echo $form->field($model, 'file')->fileInput();
 }else{
-    echo Html::tag('div', Html::img($model->path));
+    echo Html::tag('div', Html::img($model->fullPath));
 }
 
-echo $form->field($model, 'date'),
+echo $form->field($model, 'date')->widget(DatePicker::className(), [
+    'type'  => DatePicker::TYPE_INPUT,
+    'value' => $model->date,
+    'pluginOptions' => [
+        'autoclose' =>  true,
+        'format'    => 'yyyy-mm-dd'
+    ]
+]),
     $form->field($model, 'text')->textarea(),
     $form->field($model, 'tags');
 

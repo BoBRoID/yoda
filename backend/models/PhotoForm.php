@@ -2,7 +2,9 @@
 namespace backend\models;
 
 
+use common\helpers\UploadHelper;
 use common\models\Photo;
+use yii\base\Exception;
 use yii\base\Model;
 
 class PhotoForm extends Model
@@ -20,8 +22,9 @@ class PhotoForm extends Model
     public function rules()
     {
         return [
-            [['id', 'date', 'order'], 'integer'],
+            [['id', 'order'], 'integer'],
             [['path', 'text', 'tags'], 'string'],
+            ['date', 'date', 'format' => 'Y-m-d'],
             [['file'], 'safe'],
             [['path'], 'required']
         ];
@@ -49,11 +52,11 @@ class PhotoForm extends Model
         $this->setAttributes([
             'id'    =>  $photo->id,
             'path'  =>  $photo->path,
-            'date'  =>  $photo->date,
+            'date'  =>  date('Y-m-d', $photo->date),
             'text'  =>  $photo->text,
             'tags'  =>  $photo->tags,
             'order' =>  $photo->order
-        ]);
+        ], false);
     }
 
     /**
@@ -73,17 +76,43 @@ class PhotoForm extends Model
 
         $photo->setAttributes([
             'path'  =>  $this->path,
-            'date'  =>  $this->date,
+            'date'  =>  strtotime($this->date),
             'text'  =>  $this->text,
             'tags'  =>  $this->tags,
             'order' =>  $this->order,
         ]);
 
-        return $photo->save(false);
+        $saved = $photo->save(false);
+
+        if($saved){
+            $this->id = $photo->id;
+        }
+
+        return $saved;
+    }
+
+    public function getFullPath(){
+        $fullPath = $this->path;
+
+        if(!preg_match('/^http(s|):\/\//', $fullPath)){
+            $fullPath = \Yii::$app->params['frontend'].$fullPath;
+        }
+
+        return $fullPath;
     }
 
     private function uploadImage()
     {
+        $file = false;
 
+        if(array_key_exists('PhotoForm', $_FILES) && empty($_FILES['PhotoForm']['error']['file'])){
+            try{
+                $file = UploadHelper::__upload($_FILES['PhotoForm']);
+            }catch(Exception $e){
+
+            }
+        }
+
+        return $file;
     }
 }

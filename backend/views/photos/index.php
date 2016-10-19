@@ -25,7 +25,7 @@ echo Html::tag('div',
 echo \yii\widgets\ListView::widget([
     'dataProvider'  =>  $photosProvider,
     'itemView'      =>  function($model){
-        return Html::tag('div', Html::a(Html::img($model->path, ['class' => 'img-responsive']), ['photos/edit/'.$model->id]), ['class' => 'col-md-3 portfolio-item']);
+        return Html::tag('div', Html::a(Html::img($model->fullPath, ['class' => 'img-responsive']), ['photos/edit/'.$model->id]), ['class' => 'col-md-3 portfolio-item']);
     },
     'layout'    =>  '{items}'.Html::tag('div', '{summary}', ['class' => 'text-center']).Html::tag('div', Html::tag('div', '{pager}', ['class' => 'col-lg-12']), ['class' => 'row text-center'])
 ]);
